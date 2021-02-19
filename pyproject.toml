@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "project lvl2"
 authors = ["Serggi0 <serve4mia@gmail.com>"]
 packages = [
   { include = "gendiff" },
@@ -9,6 +9,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
+flake8 = "^3.8.4"
 
 [tool.poetry.dev-dependencies]
 
