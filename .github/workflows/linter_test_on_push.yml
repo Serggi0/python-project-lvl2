@@ -1,5 +1,5 @@
 # имя, чтобы отображалось в интерфейсе
-name: 'lint GitHub action'
+name: 'lint & test GitHub action'
 
 # тут список событий, на который экшен должен запускаться
 on: # пусть гоняется на любой пуш
@@ -29,3 +29,8 @@ jobs:
       - name: Test flake8 from Makefile
         run: |
           make lint
+      - name: pytest from Makefile
+        run: |
+          make test
+
+
