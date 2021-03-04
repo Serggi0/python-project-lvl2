@@ -21,6 +21,7 @@ def get_diff(first_file, second_file):
             sort_key_all = list(set_key_all)
             sort_key_all.sort()
             result = []
+            print(set_key_txt1)
 
             for i in sort_key_all:
                 if i in set_key_txt1 and i in set_key_txt2:
