@@ -10,7 +10,7 @@ on: # пусть гоняется на любой пуш
 # список того, что нужно делать. каждый job будет выводиться отдельным элементом слева UI
 jobs:
   # Ключ задания. Клавиша отображается в виде имени задания  
-  lint-flake8: 
+  flake8_and_pytest: 
     runs-on: ubuntu-latest # на какой машине гонять
     # Взято из шаблона GitHub Python package
     strategy:
@@ -29,8 +29,14 @@ jobs:
       - name: Test flake8 from Makefile
         run: |
           make lint
-      - name: pytest from Makefile
-        run: |
-          make test
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        # Взято из GitHub paambati Code Climate Coverage Action
+        env:
+          CC_TEST_REPORTER_ID: 6bc72b5dd87f08217b99d8202b3b931cc3679ac525fae80bc22cc556c8ab1ae0
+          #Reportep ID взят в CodeClimate Test Coverage
+        with:
+          coverageCommand: make test
+          debug: true
 
 
