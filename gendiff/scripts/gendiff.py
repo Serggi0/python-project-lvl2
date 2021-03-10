@@ -3,7 +3,7 @@ from gendiff import engine
 
 
 def main():
-    engine.gendiff()
+    engine.generate_diff()
 
 
 if __name__ == '__main__':

@@ -1,9 +1,10 @@
 from gendiff import engine
 
 
-def test_get_diff():
+def test_gendiff():
     file_result = open('tests/fixtures/file_result.txt')
-    assert engine.get_diff(
-        'tests/fixtures/file1.json', 'tests/fixtures/file2.json'
-    ) == file_result.read()
+    my_string = file_result.read()
+    x = engine.get_diff(
+        'tests/fixtures/file1.json', 'tests/fixtures/file2.json')
+    assert my_string == x
     file_result.close()

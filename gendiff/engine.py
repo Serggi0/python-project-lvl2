@@ -1,5 +1,73 @@
+import os.path
 import argparse
 import json
+
+SAVED = ' '
+DELETED = '-'
+ADDED = '+'
+
+
+def get_path_file(file):
+    return os.path.abspath(file)
+
+
+def parse(file):
+    path = get_path_file(file)
+    return json.load(open(path))
+
+
+def change_value(file_dict):
+    for k in file_dict:
+        if file_dict[k] is True:
+            file_dict[k] = 'true'
+        if file_dict[k] is False:
+            file_dict[k] = 'false'
+        if file_dict[k] is None:
+            file_dict[k] = 'null'
+    return file_dict
+
+
+def compare_files(file1, file2):
+    file1 = change_value(file1)
+    file2 = change_value(file2)
+    keys_file1 = set(file1.keys())
+    keys_file2 = set(file2.keys())
+    result = []
+
+    for elem in (keys_file1 & keys_file2):
+        result.extend(compare_value(elem, file1[elem], file2[elem]))
+    for elem in (keys_file1 - keys_file2):
+        result.append((DELETED, elem, file1[elem]))
+    for elem in (keys_file2 - keys_file1):
+        result.append((ADDED, elem, file2[elem]))
+    return result
+
+
+def compare_value(key, value1, value2):
+    result = ()
+    if value1 == value2:
+        result = ((SAVED, key, value2),)
+    else:
+        result = (DELETED, key, value1), (ADDED, key, value2)
+    return result
+
+
+def sort_diff(data):
+    return sorted(data, key=lambda x: x[1])
+
+
+def get_diff(file1, file2):
+    parsed_file1 = parse(file1)
+    parsed_file2 = parse(file2)
+    diff = compare_files(parsed_file1, parsed_file2)
+    diff = sort_diff(diff)
+    str_diff = '{'
+
+    for elem in diff:
+        str_diff += '\n{} {}: {}'.format(elem[0], elem[1], elem[2])
+    str_diff += "\n}"
+    print(str_diff)
+    return str_diff
 
 
 def create_parser():
@@ -10,34 +78,7 @@ def create_parser():
     return parser
 
 
-def get_diff(first_file, second_file):
-    with open(first_file, 'r') as file1:
-        with open(second_file, 'r') as file2:
-            txt1 = json.load(file1)
-            txt2 = json.load(file2)
-            set_key_txt1 = set(txt1)
-            set_key_txt2 = set(txt2)
-            set_key_all = set_key_txt1 | set_key_txt2
-            sort_key_all = list(set_key_all)
-            sort_key_all.sort()
-            result = []
-            print(set_key_txt1)
-
-            for i in sort_key_all:
-                if i in set_key_txt1 and i in set_key_txt2:
-                    if txt1[i] == txt2[i]:
-                        result.append('  {}: {}'.format(i, txt1[i]))
-                    else:
-                        result.append('- {}: {}'.format(i, txt1[i]))
-                        result.append('+ {}: {}'.format(i, txt2[i]))
-                elif i in (set_key_txt1 - set_key_txt2):
-                    result.append('- {}: {}'.format(i, txt1[i]))
-                elif i in (set_key_txt2 - set_key_txt1):
-                    result.append('+ {}: {}'.format(i, txt2[i]))
-    return '{}\n{}\n{}'.format('{', '\n'.join(result), '}')
-
-
-def gendiff():
+def generate_diff():
     parser = create_parser()
     args = parser.parse_args()
-    print(get_diff(args.first_file, args.second_file))
+    get_diff(args.first_file, args.second_file)
