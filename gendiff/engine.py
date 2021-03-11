@@ -1,19 +1,10 @@
-import os.path
 import argparse
-import json
+from gendiff.parser import parse
+
 
 SAVED = ' '
 DELETED = '-'
 ADDED = '+'
-
-
-def get_path_file(file):
-    return os.path.abspath(file)
-
-
-def parse(file):
-    path = get_path_file(file)
-    return json.load(open(path))
 
 
 def change_value(file_dict):

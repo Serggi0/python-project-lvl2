@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-from gendiff import engine
+from gendiff.engine import generate_diff
 
 
 def main():
-    engine.generate_diff()
+    generate_diff()
 
 
 if __name__ == '__main__':
