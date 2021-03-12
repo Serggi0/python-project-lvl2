@@ -43,33 +43,31 @@ def compare_value(key, value1, value2):
     return result
 
 
-def sort_diff(data):
-    return sorted(data, key=lambda x: x[1])
+# def sort_diff(data):
+#     return sorted(data, key=lambda x: x[1])
 
 
-def get_diff(file1, file2):
+def generate_diff(file1, file2):
     parsed_file1 = parse(file1)
     parsed_file2 = parse(file2)
     diff = compare_files(parsed_file1, parsed_file2)
-    diff = sort_diff(diff)
+    print(display_diff(diff))
+    return display_diff(diff)
+
+
+def display_diff(data):
+    diff = sorted(data, key=lambda x: x[1])
     str_diff = '{'
 
     for elem in diff:
         str_diff += '\n{} {}: {}'.format(elem[0], elem[1], elem[2])
     str_diff += "\n}"
-    print(str_diff)
     return str_diff
 
 
-def create_parser():
-    parser = argparse.ArgumentParser(description='Generate diff')
-    parser.add_argument('first_file')
-    parser.add_argument('second_file')
-    parser.add_argument('-f', '--format', help='set format of output')
-    return parser
-
-
-def generate_diff():
-    parser = create_parser()
-    args = parser.parse_args()
-    get_diff(args.first_file, args.second_file)
+def create_parser_arg():
+    parser_arg = argparse.ArgumentParser(description='Generate diff')
+    parser_arg.add_argument('first_file')
+    parser_arg.add_argument('second_file')
+    parser_arg.add_argument('-f', '--format', help='set format of output')
+    return parser_arg
