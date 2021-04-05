@@ -1,0 +1,7 @@
+ADDED = 'added'
+CHANGED_FROM = 'changed from'
+CHANGED_TO = 'changed to'
+DELETED = 'deleted'
+ROOT = 'root directory'
+SIMILAR = 'no changed'
+SUBDICTS = 'subdicts in common keys'
