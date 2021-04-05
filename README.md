@@ -13,3 +13,6 @@
 
 #### Asciinema step5:
 [![asciicast](https://asciinema.org/a/398291.svg)](https://asciinema.org/a/398291)
+
+#### Asciinema step6:
+[![asciicast](https://asciinema.org/a/nujAYVNGF9pzdYcK9hveplDFY.svg)](https://asciinema.org/a/nujAYVNGF9pzdYcK9hveplDFY)
