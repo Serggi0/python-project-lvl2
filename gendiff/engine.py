@@ -1,30 +1,14 @@
-import argparse
+from gendiff.cli import formatter
 from gendiff.parser import parse
-from gendiff.format.stylish import make_stylish_line
 from gendiff.prefix import (ADDED, CHANGED_FROM, CHANGED_TO,
                             DELETED, SIMILAR, SUBDICTS, ROOT)
 
 
-def create_parser_arg():
-    parser_arg = argparse.ArgumentParser(description='Generate diff')
-    parser_arg.add_argument('first_file')
-    parser_arg.add_argument('second_file')
-    parser_arg.add_argument('-f', '--format',
-                            help='set format of output', default='stylish')
-    return parser_arg
-
-
-def generate_diff(file1, file2):
-    parsed_file1 = parse(file1)
-    parsed_file2 = parse(file2)
+def generate_diff(file_path1, file_path2, format_name='stylish'):
+    parsed_file1 = parse(file_path1)
+    parsed_file2 = parse(file_path2)
     diff = make_diff_tree(parsed_file1, parsed_file2)
-    print(formatter(diff))
-    return formatter(diff)
-
-
-def formatter(diff, style='stylish'):
-    if style == 'stylish':
-        return make_stylish_line(diff)
+    return formatter(diff, format_name)
 
 
 def make_diff_tree(file1, file2):
