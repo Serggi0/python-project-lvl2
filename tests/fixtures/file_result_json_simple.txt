@@ -1,0 +1,35 @@
+{
+    "type": "root directory",
+    "children": [
+        {
+            "key": "follow",
+            "type": "deleted",
+            "value": false
+        },
+        {
+            "key": "host",
+            "type": "no changed",
+            "value": "hexlet.io"
+        },
+        {
+            "key": "proxy",
+            "type": "deleted",
+            "value": "123.234.53.22"
+        },
+        {
+            "key": "timeout",
+            "type": "changed from",
+            "value": 50
+        },
+        {
+            "key": "timeout",
+            "type": "changed to",
+            "value": 20
+        },
+        {
+            "key": "verbose",
+            "type": "added",
+            "value": true
+        }
+    ]
+}
