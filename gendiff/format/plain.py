@@ -1,6 +1,6 @@
 from gendiff.format.stylish import change_value
-from gendiff.prefix import (ADDED, CHANGED_FROM, CHANGED_TO,
-                            DELETED, SIMILAR, SUBDICTS)
+from gendiff.constants import (ADDED, CHANGED_FROM, CHANGED_TO,
+                               DELETED, SIMILAR, SUBDICTS)
 
 STATUS = {
     ADDED: 'added',
@@ -13,16 +13,16 @@ STATUS = {
 
 
 def make_plain(diff):
-    views = form_views(diff)
+    views = get_lines(diff)
     return ''.join(views).rstrip()
 
 
-def form_views(tree, child_name=''):
+def get_lines(tree, child_name=''):
     lines = []
     for node in tree['children']:
         path = child_name + node['key']
         if node['type'] == SUBDICTS:
-            lines.extend(form_views(node, f'{path}.'))
+            lines.extend(get_lines(node, f'{path}.'))
         elif node['type'] == SIMILAR:
             continue
         else:
@@ -36,17 +36,17 @@ def prepare_node(node, path):
     if node['type'] == DELETED:
         line1 = '\n'
     elif node["type"] == ADDED:
-        line1 = f' with value: {prepare_value(node["value"])}\n'
+        line1 = f' with value: {to_string(node["value"])}\n'
     elif node['type'] == CHANGED_FROM:
-        line1 = f'. From {prepare_value(node["value"])} to '
+        line1 = f'. From {to_string(node["value"])} to '
     elif node['type'] == CHANGED_TO:
-        string = f'{prepare_value(node["value"])}\n'
+        string = f'{to_string(node["value"])}\n'
         return string
     line2 = f'Property \'{path}\' was {status}{line1}'
     return line2
 
 
-def prepare_value(value):
+def to_string(value):
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, str):
