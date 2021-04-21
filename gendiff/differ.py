@@ -23,13 +23,14 @@ def read_file(path):
 
 
 def get_format(path):
+    format = ''
     part, ext = os.path.splitext(path)
     if ext == '.json':
         format = 'json'
-    elif ext == '.yaml' or '.yml':
+    elif ext == '.yaml' or ext == '.yml':
         format = 'yaml'
     else:
-        print('This file extension is not parsed')
+        return 0
     return format
 
 
