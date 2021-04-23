@@ -18,8 +18,8 @@ def formatter(diff, format_name='stylish'):
 
 def read_file(path):
     path = os.path.abspath(path)
-    data = open(path)
-    return data
+    with open(path, "r") as data:
+        return data.read()
 
 
 def get_format(path):
