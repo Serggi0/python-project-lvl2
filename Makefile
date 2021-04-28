@@ -26,4 +26,4 @@ lint:
 test:
 	poetry run pytest -vv --cov=gendiff tests/ --cov-report xml
 
-.PHONY: install build package-install lint gendiff test gendiff_json2
+.PHONY: install build package-install lint gendiff test gendiff_json gendiff_json2 gendiff_yaml gendiff_yaml2

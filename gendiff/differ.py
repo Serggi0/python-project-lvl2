@@ -30,7 +30,7 @@ def get_format(path):
     elif ext == '.yaml' or ext == '.yml':
         format = 'yaml'
     else:
-        return 0
+        raise Exception('Unsupported file format')
     return format
 
 
